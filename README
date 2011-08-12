@@ -1,10 +1,7 @@
 This is the source code (PIC Assembly) of our design project during college (2004) entitled "Microcontroller-based Home Control and Security System via SMS".
 -----------
 Abstract: 
-This project intends to control the on / off switching of appliances via SMS or text messaging through a PIC16F628 microcontroller. The user sends a predefined text message to the home server mobile phone which is connected to the PIC16F628. 
-The home server mobile phone being use is the Ericsson A2618S. The mobile phone is linked with the PIC by the mobile phone’s data cable and the RS-232 port.  The text message which was sent to the home server phone will be interpreted by the PIC. 
-Since the data that will be interpreted by the PIC will be in PDU (Protocol Description Unit) format, the PDU data will be deciphered and compared in the PIC and if a perfect match is found, the PIC will then deliver a logic high/low output 
-(depending on the SMS command) on the PIC’s output port in which the devices are connected to a relay tapped in a 220V AC line. 
+This project intends to control the on / off switching of appliances via SMS or text messaging through a PIC16F628 microcontroller. The user sends a predefined text message to the home server mobile phone which is connected to the PIC16F628. The home server mobile phone being use is the Ericsson A2618S. The mobile phone is linked with the PIC by the mobile phone’s data cable and the RS-232 port.  The text message which was sent to the home server phone will be interpreted by the PIC. Since the data that will be interpreted by the PIC will be in PDU (Protocol Description Unit) format, the PDU data will be deciphered and compared in the PIC and if a perfect match is found, the PIC will then deliver a logic high/low output (depending on the SMS command) on the PIC’s output port in which the devices are connected to a relay tapped in a 220V AC line. 
 
 Furthermore, an alarm or monitoring system is also connected to the PIC16F877. Whenever the alarm system will be triggered, the home server mobile phone sends an SMS to the user concerning the status of the alarm system as well as his/her home.
 
