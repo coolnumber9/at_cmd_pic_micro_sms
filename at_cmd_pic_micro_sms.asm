@@ -54,3 +54,36 @@ rx_ERR	EQU	0x45
 
 buffr	EQU	0x7D
 temp	EQU	0x7E
+
+;-------------------------------------------------------------------
+;	ORIGINATE RESET VECTOR TO 0X00 AT ROM AND
+;	ORIGINATE THE INTERRUPT VECTOR TO 0X04
+;-------------------------------------------------------------------
+	ORG	0x00
+	goto 	begin
+
+	ORG	0x04
+	goto	_ALARM
+
+;-------------------------------------------------------------------
+;	BANK SWITCHING & SETTING COMPARATORS OFF MACROS
+;-------------------------------------------------------------------
+	#include "bank.inc"
+	#include "cmp_off.inc"
+
+;-------------------------------------------------------------------
+;	I/O PORTS DESCRIPTION AND ITS DESIGNATION
+;-------------------------------------------------------------------
+	#define	STAT_RF	PORTA,	0
+
+	#define	STAT_TV	PORTA,	1
+	#define STAT_FN	PORTA,	2
+	#define	STAT_ST	PORTA,	3
+	#define	STAT_PC	PORTA,	4
+	#define	TMPRTR	PORTB,	0
+
+	#define	TV	PORTB,	3
+	#define	FAN	PORTB,	4
+	#define	STEREO	PORTB,	5	
+	#define PC	PORTB,	6
+	#define	REF	PORTB,	7
