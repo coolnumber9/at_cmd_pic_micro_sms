@@ -87,3 +87,95 @@ temp	EQU	0x7E
 	#define	STEREO	PORTB,	5	
 	#define PC	PORTB,	6
 	#define	REF	PORTB,	7
+
+;-------------------------------------------------------------------
+; AT COMMAND TABLE SET
+; * SET AT THIS ROM LOCATION TO AVOID PCL PAGE BOUNDARY OVERFLOW
+;-------------------------------------------------------------------
+_snd_cmd_cpms_me
+	addwf	PCL,	f
+	dt "at+cpms=",0x22,"me",0x22,",",0x22,"me",0x22,",",0x22,"me",0x22,0x0D
+
+_snd_cmd_cpms_sim
+	addwf	PCL,	f
+	dt "at+cpms=",0x22,"sm",0x22,",",0x22,"sm",0x22,",",0x22,"me",0x22,0x0D
+
+_snd_cmd_cnmi
+	addwf	PCL,	f
+	dt "at+cnmi=3,1,0,0",0x0D
+
+_snd_cmd_cmgd_1
+	addwf	PCL,	f
+	dt "at+cmgd=1",0x0D
+
+_snd_cmd_cmgd_12
+	addwf	PCL,	f
+	dt "at+cmgd=12",0x0D
+
+_snd_cmd_cind
+	addwf	PCL,	f
+	dt "at+cind?",0x0D
+
+_snd_cmss_1
+	addwf	PCL,	f
+	dt "at+cmss=1",0x0D
+
+_snd_cmss_2
+	addwf	PCL,	f
+	dt "at+cmss=2",0x0D
+
+_snd_cmss_3
+	addwf	PCL,	f
+	dt "at+cmss=3",0x0D
+
+_snd_cmss_4
+	addwf	PCL,	f
+	dt "at+cmss=4",0x0D
+
+_snd_cmss_5
+	addwf	PCL,	f
+	dt "at+cmss=5",0x0D
+
+_snd_cmss_6
+	addwf	PCL,	f
+	dt "at+cmss=6",0x0D
+
+_snd_cmss_7
+	addwf	PCL,	f
+	dt "at+cmss=7",0x0D
+
+_snd_cmss_8
+	addwf	PCL,	f
+	dt "at+cmss=8",0x0D
+
+_snd_cmss_9
+	addwf	PCL,	f
+	dt "at+cmss=9",0x0D
+
+_snd_cmss_10
+	addwf	PCL,	f
+	dt "at+cmss=10",0x0D
+
+_snd_cmss_11
+	addwf	PCL,	f
+	dt "at+cmss=11",0x0D
+
+_snd_cmgl_0
+	addwf	PCL,	f
+	dt "at+cmgl=0",0x0D
+
+_snd_cmgr_1
+	addwf	PCL,	f
+	dt "at+cmgr=1",0x0D
+
+_snd_cmd_AT
+	addwf	PCL,	f
+	dt "at",0x0D
+
+_snd_cmd_ATD
+	addwf	PCL,	f
+	dt "atd09173247521",0x3B,0x0D
+
+_snd_cmd_ATH
+	addwf	PCL,	f
+	dt "ath",0x0D
