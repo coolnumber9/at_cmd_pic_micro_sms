@@ -1,3 +1,23 @@
+;***********************************************************************
+;
+;   MICROCONTROLLER-BASED HOME CONTROL AND SECURITY SYSTEM VIS SMS
+;
+;	Author: Kristoffer Dominic R. Amora
+;
+;	SPECS:
+;		Mobile Phone	: ERICSSON T10s / A2618s
+;		Cable		: SONY ERICSSON RS232 Cable DRS-11 and
+;				  and our own makeshift FBUS Cable :)
+;		TTL Driver	: Maxim's MAX232
+;		Microcontroller	: Microchip's PIC16F628 / PIC16F877
+;		Oscillator	: 4MHZ XTAL
+;		
+;		Source Code	: Microchip's PIC Instruction Set (Assembly)
+;		Language Suite	: Microchip
+;		Language Tool	: MPASM	
+;
+;***********************************************************************
+
 list	p=16f628
 #include <p16f628.inc>
 __CONFIG _CP_OFF & _WDT_OFF & _PWRTE_ON & _XT_OSC & _MCLRE_ON & _BODEN_ON & _LVP_OFF
@@ -332,3 +352,199 @@ _CMSS_a	call	_set_msg_snd1
 	btfsc	STATUS,	Z
 	goto	_CMSS_a
 	call	_settle
+
+;-------------------------------------------------------------------
+;	STARTING PROCEDURE
+;-------------------------------------------------------------------
+_again	clrf	PORTA
+	
+	clrf	flg_pw
+	clrf	flg_chk
+
+	clrf	flg_tv1
+	clrf	flg_fn1
+	clrf	flg_st1
+	clrf	flg_pc1
+	clrf	flg_rf1
+
+	clrf	flg_tv0
+	clrf	flg_fn0
+	clrf	flg_st0
+	clrf	flg_pc0
+	clrf	flg_rf0
+
+	call	_settle
+	call	_index_12?
+	call	_settle
+	call	_reset_char
+
+	movlw	d'85'
+	movwf	chr_lmt
+	call	_set_msg_cmgl_0
+	call	_settle
+	
+_cont	decfsz	chr_lmt,	f
+	goto	_get_data
+	goto	_cont2
+
+_get_data
+	call	_rx1
+	goto	_cont
+
+_cont2	movlw	d'11'
+	movwf	chr_lmt
+	
+	call	_reset_char
+
+_cont3	decfsz	chr_lmt,	f
+	goto	_get_UserData
+	goto	_decipher_passwrd		
+	
+_get_UserData
+	call	_rx
+	goto	_cont3
+
+_decipher_passwrd
+
+	call	_OK
+	
+	movlw	0x43
+	subwf	chr1,	w
+	btfss	STATUS,	Z
+	goto	_out	
+	
+	movlw	0x35
+	subwf	chr2,	w
+	btfss	STATUS,	Z
+	goto	_out
+
+	movlw	0x37
+	subwf	chr3,	w
+	btfss	STATUS,	Z
+	goto	_out
+	
+	movlw	0x31
+	subwf	chr4,	w
+	btfss	STATUS,	Z
+	goto	_out
+
+	movlw	0x35
+	subwf	chr5,	w
+	btfss	STATUS,	Z
+	goto	_out	
+	
+	movlw	0x39
+	subwf	chr6,	w
+	btfss	STATUS,	Z
+	goto	_out
+
+	movlw	0x33
+	subwf	chr7,	w
+	btfss	STATUS,	Z
+	goto	_out
+	
+	movlw	0x36
+	subwf	chr8,	w
+	btfss	STATUS,	Z
+	goto	_out
+
+	movlw	0x30
+	subwf	chr9,	w
+	btfss	STATUS,	Z
+	goto	_out
+	
+	movlw	0x33
+	subwf	chr10,	w
+	btfss	STATUS,	Z
+	goto	_out
+	goto	_set_flag_pw
+	
+_set_flag_pw
+	movlw	b'00000001'
+	movwf	flg_pw
+	goto	_snd_feedbck
+
+_out	clrf	flg_pw
+	goto	_snd_feedbck
+
+_snd_feedbck
+	movlw	0x01
+	subwf	flg_pw,	w
+	btfss	STATUS,	Z
+	goto	_NO
+	goto	_YES
+
+_NO	call	_disp
+_CMSS_b	call	_settle
+	call	_set_msg_snd2
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_CMSS_b
+_CMGD_a	call	_settle
+	call	_set_msg_del12
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_CMGD_a	
+	call	_reset_char
+	call	_delay
+	goto	_again
+
+_YES	call	_disp
+_CMSS_c	call	_settle
+	call	_set_msg_snd3
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_CMSS_c
+_CMGD_b	call	_settle
+	call	_set_msg_del12
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_CMGD_b
+	call	_reset_char
+	call	_delay
+	goto	_ACCEPT_COMMANDS
+
+;-------------------------------------------------------------------
+;		BEGIN ACCEPTING SMS COMMANDS
+;-------------------------------------------------------------------
+_ACCEPT_COMMANDS
+	call	_reset_char
+		
+	call	_index_12?
+	call	_settle
+
+_get_txt
+	movlw	d'85'
+	movwf	chr_lmt
+	call	_settle
+	call	_set_msg_cmgl_0
+	call	_settle
+	
+__cont	decfsz	chr_lmt,	f
+	goto	__get_data
+	goto	__cont2
+
+__get_data
+	call	_rx1
+	goto	__cont
+
+__cont2	movlw	d'11'
+	movwf	chr_lmt
+	
+	call	_reset_char
+
+__cont3	decfsz	chr_lmt,	f
+	goto	__get_UserData
+	goto	_decipher_msgs		
+	
+__get_UserData
+	call	_rx
+	goto	__cont3
