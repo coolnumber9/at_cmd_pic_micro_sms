@@ -179,3 +179,156 @@ _snd_cmd_ATD
 _snd_cmd_ATH
 	addwf	PCL,	f
 	dt "ath",0x0D
+
+;-------------------------------------------------------------------
+;	HIGH TEMPERATURE MONITOR INTERRUPT ROUTINE
+;-------------------------------------------------------------------
+
+_ALARM
+	bcf	INTCON, GIE
+	call	_delay
+	call	_delay
+	call	_delay
+	btfss	INTCON,	INTF
+	retfie
+	goto	_alert	
+
+_alert	call	_settle
+	call	_set_CALL_USER
+	call	_settle
+	call	_OK
+
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	
+	call	_set_END_CALL
+	call	_settle
+	call	_OK
+	call	_delay
+	call	_delay
+	goto	_exit_int
+
+_exit_int
+	bcf	INTCON,	INTF
+	retfie
+
+;-------------------------------------------------------------------
+;	PROVIDE TIME FOR WARM-UP AND PIC INITIALIZATION		
+;-------------------------------------------------------------------
+
+begin	call	_init
+
+	movlw	0xFF
+	movwf	PORTB
+
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_settle
+		
+	call	_reset_char
+
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_delay
+	call	_settle
+
+;-------------------------------------------------------------------
+;	MOBILE PHONE INITIALIZATION
+;-------------------------------------------------------------------
+_ON	call	_set_msg_AT
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_ON
+_CPMS	call	_settle
+	call	_set_msg_store
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_CPMS
+_CNMI	call	_settle
+	call	_set_msg_indicatr
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_CNMI
+_CMSS_a	call	_set_msg_snd1
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_CMSS_a
+	call	_settle
