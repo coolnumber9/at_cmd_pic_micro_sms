@@ -548,3 +548,150 @@ __cont3	decfsz	chr_lmt,	f
 __get_UserData
 	call	_rx
 	goto	__cont3
+	
+;-------------------------------------------------------------------
+;	DECIPHER PROTOCOL DESCRIPTION UNIT (PDU) OF SMS RECEIVED
+;-------------------------------------------------------------------
+_decipher_msgs
+
+	call	_OK
+
+;-------------------------------------------------------------------
+;	"Tv on" USER DATA STRING COMPARISON  
+;-------------------------------------------------------------------
+_tv_on	movlw	0x35
+	subwf	chr1,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_on	
+	
+	movlw	0x34
+	subwf	chr2,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_on
+
+	movlw	0x33
+	subwf	chr3,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_on
+	
+	movlw	0x42
+	subwf	chr4,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_on
+
+	movlw	0x45
+	subwf	chr5,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_on	
+	
+	movlw	0x38
+	subwf	chr6,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_on
+
+	movlw	0x45
+	subwf	chr7,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_on
+	
+	movlw	0x44
+	subwf	chr8,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_on
+
+	movlw	0x30
+	subwf	chr9,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_on
+	
+	movlw	0x36
+	subwf	chr10,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_on
+	goto	_set_flag_tv1
+
+_set_flag_tv1
+	movlw	b'00000001'
+	movwf	flg_tv1
+	movlw	b'00000001'
+	movwf	flg_chk
+	goto	_chk1
+
+_out_tv_on
+	clrf	flg_tv1
+	clrf	flg_chk
+	goto	_chk1
+
+_chk1	btfss	flg_chk,	0
+	goto	_tv_off
+	goto	_BREAK
+
+;-------------------------------------------------------------------
+;	"Tv off" USER DATA STRING COMPARISON
+;-------------------------------------------------------------------
+_tv_off	movlw	0x35
+	subwf	chr1,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_off	
+	
+	movlw	0x34
+	subwf	chr2,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_off
+
+	movlw	0x33
+	subwf	chr3,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_off
+	
+	movlw	0x42
+	subwf	chr4,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_off
+
+	movlw	0x45
+	subwf	chr5,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_off	
+	
+	movlw	0x38
+	subwf	chr6,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_off
+
+	movlw	0x36
+	subwf	chr7,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_off
+	
+	movlw	0x44
+	subwf	chr8,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_off
+
+	movlw	0x33
+	subwf	chr9,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_off
+	
+	movlw	0x36
+	subwf	chr10,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_off
+	goto	_set_flag_tv0
+	
+_set_flag_tv0
+	movlw	b'00000001'
+	movwf	flg_tv0
+	movlw	b'00000001'
+	movwf	flg_chk
+	goto	_chk2
+
+_out_tv_off
+	clrf	flg_tv0
+	clrf	flg_chk
+	goto	_chk2
+
+_chk2	btfss	flg_chk,	0
+	goto	_tv_?
+	goto	_BREAK
