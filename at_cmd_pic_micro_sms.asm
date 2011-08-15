@@ -765,3 +765,73 @@ _out_tv_?
 _chk3	btfss	flg_chk,	0
 	goto	_fan_on
 	goto	_BREAK
+
+;-------------------------------------------------------------------
+;	"Fan on" USER DATA STRING COMPARISON
+;-------------------------------------------------------------------
+_fan_on	movlw	0x43
+	subwf	chr1,	w
+	btfss	STATUS,	Z
+	goto	_out_fn_on	
+	
+	movlw	0x36
+	subwf	chr2,	w
+	btfss	STATUS,	Z
+	goto	_out_fn_on
+
+	movlw	0x42
+	subwf	chr3,	w
+	btfss	STATUS,	Z
+	goto	_out_fn_on
+	
+	movlw	0x30
+	subwf	chr4,	w
+	btfss	STATUS,	Z
+	goto	_out_fn_on
+
+	movlw	0x31
+	subwf	chr5,	w
+	btfss	STATUS,	Z
+	goto	_out_fn_on	
+	
+	movlw	0x42
+	subwf	chr6,	w
+	btfss	STATUS,	Z
+	goto	_out_fn_on
+
+	movlw	0x46
+	subwf	chr7,	w
+	btfss	STATUS,	Z
+	goto	_out_fn_on
+	
+	movlw	0x34
+	subwf	chr8,	w
+	btfss	STATUS,	Z
+	goto	_out_fn_on
+
+	movlw	0x37
+	subwf	chr9,	w
+	btfss	STATUS,	Z
+	goto	_out_fn_on
+	
+	movlw	0x36
+	subwf	chr10,	w
+	btfss	STATUS,	Z
+	goto	_out_fn_on
+	goto	_set_flag_fn1
+	
+_set_flag_fn1
+	movlw	b'00000001'
+	movwf	flg_fn1
+	movlw	b'00000001'
+	movwf	flg_chk
+	goto	_chk4
+
+_out_fn_on
+	clrf	flg_fn1
+	clrf	flg_chk
+	goto	_chk4
+
+_chk4	btfss	flg_chk,	0
+	goto	_fan_off
+	goto	_BREAK
