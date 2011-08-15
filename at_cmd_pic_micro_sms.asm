@@ -695,3 +695,73 @@ _out_tv_off
 _chk2	btfss	flg_chk,	0
 	goto	_tv_?
 	goto	_BREAK
+
+;-------------------------------------------------------------------
+;	"Tv st?" USER DATA STRING COMPARISON
+;-------------------------------------------------------------------
+_tv_?	movlw	0x35
+	subwf	chr1,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_?	
+	
+	movlw	0x34
+	subwf	chr2,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_?
+
+	movlw	0x33
+	subwf	chr3,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_?
+	
+	movlw	0x42
+	subwf	chr4,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_?
+
+	movlw	0x36
+	subwf	chr5,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_?	
+	
+	movlw	0x38
+	subwf	chr6,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_?
+
+	movlw	0x34
+	subwf	chr7,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_?
+	
+	movlw	0x45
+	subwf	chr8,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_?
+
+	movlw	0x46
+	subwf	chr9,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_?
+	
+	movlw	0x46
+	subwf	chr10,	w
+	btfss	STATUS,	Z
+	goto	_out_tv_?
+	goto	_set_flag_tv?
+	
+_set_flag_tv?
+	movlw	b'00000001'
+	movwf	flg_tv?
+	movlw	b'00000001'
+	movwf	flg_chk
+	goto	_chk3
+
+_out_tv_?
+	clrf	flg_tv?
+	clrf	flg_chk
+	goto	_chk3
+
+_chk3	btfss	flg_chk,	0
+	goto	_fan_on
+	goto	_BREAK
