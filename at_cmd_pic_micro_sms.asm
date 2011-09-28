@@ -906,3 +906,74 @@ _out_fn_off
 _chk5	btfss	flg_chk,	0
 	goto	_fan_?
 	goto	_BREAK
+
+;-------------------------------------------------------------------
+;	"Str on" USER DATA STRING COMPARISON
+;-------------------------------------------------------------------
+_stereo_on
+	movlw	0x35
+	subwf	chr1,	w
+	btfss	STATUS,	Z
+	goto	_out_st_on	
+	
+	movlw	0x33
+	subwf	chr2,	w
+	btfss	STATUS,	Z
+	goto	_out_st_on
+
+	movlw	0x42
+	subwf	chr3,	w
+	btfss	STATUS,	Z
+	goto	_out_st_on
+	
+	movlw	0x41
+	subwf	chr4,	w
+	btfss	STATUS,	Z
+	goto	_out_st_on
+
+	movlw	0x31
+	subwf	chr5,	w
+	btfss	STATUS,	Z
+	goto	_out_st_on	
+	
+	movlw	0x43
+	subwf	chr6,	w
+	btfss	STATUS,	Z
+	goto	_out_st_on
+
+	movlw	0x46
+	subwf	chr7,	w
+	btfss	STATUS,	Z
+	goto	_out_st_on
+	
+	movlw	0x34
+	subwf	chr8,	w
+	btfss	STATUS,	Z
+	goto	_out_st_on
+
+	movlw	0x37
+	subwf	chr9,	w
+	btfss	STATUS,	Z
+	goto	_out_st_on
+	
+	movlw	0x36
+	subwf	chr10,	w
+	btfss	STATUS,	Z
+	goto	_out_st_on
+	goto	_set_flag_st1
+	
+_set_flag_st1
+	movlw	b'00000001'
+	movwf	flg_st1
+	movlw	b'00000001'
+	movwf	flg_chk
+	goto	_chk7
+
+_out_st_on
+	clrf	flg_st1
+	clrf	flg_chk
+	goto	_chk7
+
+_chk7	btfss	flg_chk,	0
+	goto	_stereo_off
+	goto	_BREAK
