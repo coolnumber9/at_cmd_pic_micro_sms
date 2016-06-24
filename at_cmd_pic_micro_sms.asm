@@ -1120,3 +1120,1606 @@ _out_st_off
 _chk8	btfss	flg_chk,	0
 	goto	_stereo_?
 	goto	_BREAK
+
+;-------------------------------------------------------------------
+;	"Str st?" USER DATA STRING COMPARISON
+;-------------------------------------------------------------------
+_stereo_?
+	movlw	0x35
+	subwf	chr1,	w
+	btfss	STATUS,	Z
+	goto	_out_st_?	
+	
+	movlw	0x33
+	subwf	chr2,	w
+	btfss	STATUS,	Z
+	goto	_out_st_?
+
+	movlw	0x42
+	subwf	chr3,	w
+	btfss	STATUS,	Z
+	goto	_out_st_?
+	
+	movlw	0x41
+	subwf	chr4,	w
+	btfss	STATUS,	Z
+	goto	_out_st_?
+
+	movlw	0x31
+	subwf	chr5,	w
+	btfss	STATUS,	Z
+	goto	_out_st_?	
+	
+	movlw	0x43
+	subwf	chr6,	w
+	btfss	STATUS,	Z
+	goto	_out_st_?
+
+	movlw	0x33
+	subwf	chr7,	w
+	btfss	STATUS,	Z
+	goto	_out_st_?
+	
+	movlw	0x34
+	subwf	chr8,	w
+	btfss	STATUS,	Z
+	goto	_out_st_?
+
+	movlw	0x41
+	subwf	chr9,	w
+	btfss	STATUS,	Z
+	goto	_out_st_?
+	
+	movlw	0x37
+	subwf	chr10,	w
+	btfss	STATUS,	Z
+	goto	_out_st_?
+	goto	_set_flag_st?
+	
+_set_flag_st?
+	movlw	b'00000001'
+	movwf	flg_st?
+	movlw	b'00000001'
+	movwf	flg_chk
+	goto	_chk9
+
+_out_st_?
+	clrf	flg_st?
+	clrf	flg_chk
+	goto	_chk9
+
+_chk9	btfss	flg_chk,	0
+	goto	_pc_on
+	goto	_BREAK
+
+;-------------------------------------------------------------------
+;	"Pc on" USER DATA STRING COMPARISON
+;-------------------------------------------------------------------
+_pc_on	movlw	0x44
+	subwf	chr1,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_on	
+	
+	movlw	0x30
+	subwf	chr2,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_on
+
+	movlw	0x33
+	subwf	chr3,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_on
+	
+	movlw	0x31
+	subwf	chr4,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_on
+
+	movlw	0x45
+	subwf	chr5,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_on	
+	
+	movlw	0x38
+	subwf	chr6,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_on
+
+	movlw	0x45
+	subwf	chr7,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_on
+	
+	movlw	0x44
+	subwf	chr8,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_on
+
+	movlw	0x30
+	subwf	chr9,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_on
+	
+	movlw	0x36
+	subwf	chr10,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_on
+	goto	_set_flag_pc1
+	
+_set_flag_pc1
+	movlw	b'00000001'
+	movwf	flg_pc1
+	movlw	b'00000001'
+	movwf	flg_chk
+	goto	_chk10
+
+_out_pc_on
+	clrf	flg_pc1
+	clrf	flg_chk
+	goto	_chk10
+
+_chk10	btfss	flg_chk,	0
+	goto	_pc_off
+	goto	_BREAK_true
+
+;-------------------------------------------------------------------
+;	"Pc off" USER DATA STRING COMPARISON
+;-------------------------------------------------------------------
+_pc_off	movlw	0x44
+	subwf	chr1,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_off	
+	
+	movlw	0x30
+	subwf	chr2,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_off
+
+	movlw	0x33
+	subwf	chr3,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_off
+	
+	movlw	0x31
+	subwf	chr4,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_off
+
+	movlw	0x45
+	subwf	chr5,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_off	
+	
+	movlw	0x38
+	subwf	chr6,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_off
+
+	movlw	0x36
+	subwf	chr7,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_off
+	
+	movlw	0x44
+	subwf	chr8,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_off
+
+	movlw	0x33
+	subwf	chr9,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_off
+	
+	movlw	0x36
+	subwf	chr10,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_off
+	goto	_set_flag_pc0
+	
+_set_flag_pc0
+	movlw	b'00000001'
+	movwf	flg_pc0
+	movlw	b'00000001'
+	movwf	flg_chk
+	goto	_chk11
+
+_out_pc_off
+	clrf	flg_pc0
+	clrf	flg_chk
+	goto	_chk11
+
+_chk11	btfss	flg_chk,	0
+	goto	_pc_?
+	goto	_BREAK_true
+
+;-------------------------------------------------------------------
+;	"Pc st?" USER DATA STRING COMPARISON
+;-------------------------------------------------------------------
+_pc_?	movlw	0x44
+	subwf	chr1,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_?	
+	
+	movlw	0x30
+	subwf	chr2,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_?
+
+	movlw	0x33
+	subwf	chr3,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_?
+	
+	movlw	0x31
+	subwf	chr4,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_?
+
+	movlw	0x36
+	subwf	chr5,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_?	
+	
+	movlw	0x38
+	subwf	chr6,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_?
+
+	movlw	0x34
+	subwf	chr7,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_?
+	
+	movlw	0x45
+	subwf	chr8,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_?
+
+	movlw	0x46
+	subwf	chr9,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_?
+	
+	movlw	0x46
+	subwf	chr10,	w
+	btfss	STATUS,	Z
+	goto	_out_pc_?
+	goto	_set_flag_pc?
+	
+_set_flag_pc?
+	movlw	b'00000001'
+	movwf	flg_pc?
+	movlw	b'00000001'
+	movwf	flg_chk
+	goto	_chk12
+
+_out_pc_?
+	clrf	flg_pc?
+	clrf	flg_chk
+	goto	_chk12
+
+_chk12	btfss	flg_chk,	0
+	goto	_ref_on
+	goto	_BREAK_true
+
+;-------------------------------------------------------------------
+;	"Ref on" USER DATA STRING COMPARISON
+;-------------------------------------------------------------------
+_ref_on	movlw	0x44
+	subwf	chr1,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_on	
+	
+	movlw	0x32
+	subwf	chr2,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_on
+
+	movlw	0x42
+	subwf	chr3,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_on
+	
+	movlw	0x32
+	subwf	chr4,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_on
+
+	movlw	0x31
+	subwf	chr5,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_on	
+	
+	movlw	0x39
+	subwf	chr6,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_on
+
+	movlw	0x46
+	subwf	chr7,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_on
+	
+	movlw	0x34
+	subwf	chr8,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_on
+
+	movlw	0x37
+	subwf	chr9,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_on
+	
+	movlw	0x36
+	subwf	chr10,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_on
+	goto	_set_flag_rf1
+	
+_set_flag_rf1
+	movlw	b'00000001'
+	movwf	flg_rf1
+	movlw	b'00000001'
+	movwf	flg_chk
+	goto	_chk13
+
+_out_rf_on
+	clrf	flg_pc1
+	clrf	flg_chk
+	goto	_chk13
+
+_chk13	btfss	flg_chk,	0
+	goto	_ref_off
+	goto	_BREAK_true
+
+;-------------------------------------------------------------------
+;	"Ref off" USER DATA STRING COMPARISON
+;-------------------------------------------------------------------
+_ref_off
+	movlw	0x44
+	subwf	chr1,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_off	
+	
+	movlw	0x32
+	subwf	chr2,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_off
+
+	movlw	0x42
+	subwf	chr3,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_off
+	
+	movlw	0x32
+	subwf	chr4,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_off
+
+	movlw	0x31
+	subwf	chr5,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_off	
+	
+	movlw	0x39
+	subwf	chr6,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_off
+
+	movlw	0x46
+	subwf	chr7,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_off
+	
+	movlw	0x34
+	subwf	chr8,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_off
+
+	movlw	0x33
+	subwf	chr9,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_off
+	
+	movlw	0x36
+	subwf	chr10,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_off
+	goto	_set_flag_rf0
+	
+_set_flag_rf0
+	movlw	b'00000001'
+	movwf	flg_rf0
+	movlw	b'00000001'
+	movwf	flg_chk
+	goto	_chk14
+
+_out_rf_off
+	clrf	flg_pc0
+	clrf	flg_chk
+	goto	_chk14
+
+_chk14	btfss	flg_chk,	0
+	goto	_ref_?
+	goto	_BREAK_true
+
+;-------------------------------------------------------------------
+;	"Ref st?" USER DATA STRING COMPARISON
+;-------------------------------------------------------------------
+_ref_?	movlw	0x44
+	subwf	chr1,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_?	
+	
+	movlw	0x32
+	subwf	chr2,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_?
+
+	movlw	0x42
+	subwf	chr3,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_?
+	
+	movlw	0x32
+	subwf	chr4,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_?
+
+	movlw	0x31
+	subwf	chr5,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_?	
+	
+	movlw	0x39
+	subwf	chr6,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_?
+
+	movlw	0x33
+	subwf	chr7,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_?
+	
+	movlw	0x34
+	subwf	chr8,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_?
+
+	movlw	0x41
+	subwf	chr9,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_?
+	
+	movlw	0x37
+	subwf	chr10,	w
+	btfss	STATUS,	Z
+	goto	_out_rf_?
+	goto	_set_flag_rf?
+	
+_set_flag_rf?
+	movlw	b'00000001'
+	movwf	flg_rf?
+	movlw	b'00000001'
+	movwf	flg_chk
+	goto	_chk15
+
+_out_rf_?
+	clrf	flg_pc?
+	clrf	flg_chk
+	goto	_chk15
+
+_chk15	btfss	flg_chk,	0
+	goto	_all_on
+	goto	_BREAK_true
+
+;-------------------------------------------------------------------
+;	"All on" USER DATA STRING COMPARISON
+;-------------------------------------------------------------------
+_all_on	movlw	0x34
+	subwf	chr1,	w
+	btfss	STATUS,	Z
+	goto	_out_al1	
+	
+	movlw	0x31
+	subwf	chr2,	w
+	btfss	STATUS,	Z
+	goto	_out_al1
+
+	movlw	0x33
+	subwf	chr3,	w
+	btfss	STATUS,	Z
+	goto	_out_al1
+	
+	movlw	0x36
+	subwf	chr4,	w
+	btfss	STATUS,	Z
+	goto	_out_al1
+
+	movlw	0x31
+	subwf	chr5,	w
+	btfss	STATUS,	Z
+	goto	_out_al1	
+	
+	movlw	0x42
+	subwf	chr6,	w
+	btfss	STATUS,	Z
+	goto	_out_al1
+
+	movlw	0x46
+	subwf	chr7,	w
+	btfss	STATUS,	Z
+	goto	_out_al1
+	
+	movlw	0x34
+	subwf	chr8,	w
+	btfss	STATUS,	Z
+	goto	_out_al1
+
+	movlw	0x37
+	subwf	chr9,	w
+	btfss	STATUS,	Z
+	goto	_out_al1
+	
+	movlw	0x36
+	subwf	chr10,	w
+	btfss	STATUS,	Z
+	goto	_out_al1
+	goto	_set_flag_al1
+	
+_set_flag_al1
+	movlw	b'00000001'
+	movwf	flg_al1
+	movlw	b'00000001'
+	movwf	flg_chk
+	goto	_chk16
+
+_out_al1
+	clrf	flg_al1
+	clrf	flg_chk
+	goto	_chk16
+
+_chk16	btfss	flg_chk,	0
+	goto	_all_of
+	goto	_BREAK_true
+
+;-------------------------------------------------------------------
+;	"All off" USER DATA STRING COMPARISON
+;-------------------------------------------------------------------
+_all_of	movlw	0x34
+	subwf	chr1,	w
+	btfss	STATUS,	Z
+	goto	_out_al0	
+	
+	movlw	0x31
+	subwf	chr2,	w
+	btfss	STATUS,	Z
+	goto	_out_al0
+
+	movlw	0x33
+	subwf	chr3,	w
+	btfss	STATUS,	Z
+	goto	_out_al0
+	
+	movlw	0x36
+	subwf	chr4,	w
+	btfss	STATUS,	Z
+	goto	_out_al0
+
+	movlw	0x31
+	subwf	chr5,	w
+	btfss	STATUS,	Z
+	goto	_out_al0	
+	
+	movlw	0x42
+	subwf	chr6,	w
+	btfss	STATUS,	Z
+	goto	_out_al0
+
+	movlw	0x46
+	subwf	chr7,	w
+	btfss	STATUS,	Z
+	goto	_out_al0
+	
+	movlw	0x34
+	subwf	chr8,	w
+	btfss	STATUS,	Z
+	goto	_out_al0
+
+	movlw	0x33
+	subwf	chr9,	w
+	btfss	STATUS,	Z
+	goto	_out_al0
+	
+	movlw	0x36
+	subwf	chr10,	w
+	btfss	STATUS,	Z
+	goto	_out_al0
+	goto	_set_flag_al0
+	
+_set_flag_al0
+	movlw	b'00000001'
+	movwf	flg_al0
+	movlw	b'00000001'
+	movwf	flg_chk
+	goto	_chk17
+
+_out_al0
+	clrf	flg_al0
+	clrf	flg_chk
+	goto	_chk17
+
+_chk17	btfss	flg_chk,	0
+	goto	_INVALID
+	goto	_BREAK_true
+
+_jmp_Accept_Cmds
+	goto	_ACCEPT_COMMANDS
+
+;-------------------------------------------------------------------
+;	WAIT FOR A POSITIVE REPLY (FUNCTION) FROM THE MOBILE PHONE
+;-------------------------------------------------------------------
+_OK
+_get_O	call	_rx1
+	
+	movwf	buffr
+	movlw	0x4F 		
+	subwf	buffr,	w
+	btfss	STATUS,	Z
+	goto	_get_E	
+	retlw	b'00000000'
+
+_get_E	movlw	0x45
+	subwf	buffr,	w
+	btfss	STATUS,	Z
+	goto	_get_O
+	retlw	b'00000001'
+
+_chk_ERROR
+	movwf	ERROR_?	
+	movlw	b'00000001'
+	subwf	ERROR_?,	w
+	return	
+	
+;-------------------------------------------------------------------
+;	START OF FLAG VALUE CHECKING
+;-------------------------------------------------------------------
+
+_BREAK_true	
+		
+_BREAK_	btfss	flg_tv1,	0
+	goto	_nxt1
+	call	_exec_tv1
+	goto	_THE_END
+
+_nxt1	btfss	flg_tv0,	0
+	goto	_nxt2
+	call	_exec_tv0
+	goto	_THE_END
+
+_nxt2	btfss	flg_tv?,	0
+	goto	_nxt3
+	call	_notify_tv?
+	goto	_THE_END
+
+_nxt3	btfss	flg_fn1,	0
+	goto	_nxt4
+	call	_exec_fn1
+	goto	_THE_END
+
+_nxt4	btfss	flg_fn0,	0
+	goto	_nxt5
+	call	_exec_fn0
+	goto	_THE_END
+
+_nxt5	btfss	flg_fn?,	0
+	goto	_nxt6
+	call	_notify_fn?
+	goto	_THE_END
+
+_nxt6	btfss	flg_st1,	0
+	goto	_nxt7
+	call	_exec_st1
+	goto	_THE_END
+
+_nxt7	btfss	flg_st0,	0
+	goto	_nxt8
+	call	_exec_st0
+	goto	_THE_END
+
+_nxt8	btfss	flg_st?,	0
+	goto	_nxt9
+	call	_notify_st?
+	goto	_THE_END
+
+_nxt9	btfss	flg_pc1,	0
+	goto	_nxt10
+	call	_exec_pc1
+	goto	_THE_END
+
+_nxt10	btfss	flg_pc0,	0
+	goto	_nxt11
+	call	_exec_pc0
+	goto	_THE_END
+
+_nxt11	btfss	flg_pc?,	0
+	goto	_nxt12
+	call	_notify_pc?
+	goto	_THE_END
+
+_nxt12	btfss	flg_rf1,	0
+	goto	_nxt13
+	call	_exec_rf1
+	goto	_THE_END
+
+_nxt13	btfss	flg_rf0,	0
+	goto	_nxt14
+	call	_exec_rf0
+	goto	_THE_END
+
+_nxt14	btfss	flg_rf?,	0
+	goto	_nxt15
+	call	_notify_rf?
+	goto	_THE_END
+
+_nxt15	btfss	flg_al1,	0
+	goto	_nxt16
+	call	_exec_al1
+	goto	_THE_END
+
+_nxt16	btfss	flg_al0,	0
+	goto	_INVALID
+	call	_exec_al0
+	goto	_THE_END
+
+_exec_tv1
+	bcf	TV
+_CMSS_d	call	_settle
+	call	_set_msg_snd8
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_CMSS_d
+	return
+
+_exec_fn1
+	bcf	FAN
+_CMSS_e	call	_settle
+	call	_set_msg_snd8
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_CMSS_e
+	return
+
+_exec_st1
+	bcf	STEREO
+_CMSS_f	call	_settle
+	call	_set_msg_snd8
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_CMSS_f
+	return
+
+_exec_pc1
+	bcf	PC
+_CMSS_g	call	_settle
+	call	_set_msg_snd8
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_CMSS_g
+	return
+
+_exec_rf1
+	bcf	REF
+_CMSS_h	call	_settle
+	call	_set_msg_snd8
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_CMSS_h
+	return
+
+_exec_tv0
+	bsf	TV
+_CMSS_i	call	_settle
+	call	_set_msg_snd9
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_CMSS_i
+	return
+
+_exec_fn0
+	bsf	FAN
+_CMSS_j	call	_settle
+	call	_set_msg_snd9
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_CMSS_j
+	return
+
+_exec_st0
+	bsf	STEREO
+_CMSS_k	call	_settle
+	call	_set_msg_snd9
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_CMSS_k
+	return
+
+_exec_pc0
+	bsf	PC
+_CMSS_l	call	_settle
+	call	_set_msg_snd9
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_CMSS_l
+	return
+
+_exec_rf0
+	bsf	REF
+_CMSS_m	call	_settle
+	call	_set_msg_snd9
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_CMSS_m
+	return
+
+_notify_tv?
+	btfsc	STAT_TV
+	goto	_tv_is_off	
+	goto	_tv_is_on
+_tv_end	nop
+	return
+	
+_tv_is_on
+	call	_settle
+	call	_set_msg_snd4
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_tv_is_on
+	goto	_tv_end
+
+_tv_is_off
+	call	_settle	
+	call	_set_msg_snd5
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_tv_is_off
+	goto	_tv_end
+
+_notify_fn?
+	btfsc	STAT_FN
+	goto	_fn_is_off	
+	goto	_fn_is_on
+_fn_end	nop
+	return
+	
+_fn_is_on
+	call	_settle
+	call	_set_msg_snd4
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_fn_is_on
+	goto	_fn_end
+
+_fn_is_off	
+	call	_settle
+	call	_set_msg_snd5
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_fn_is_off
+	goto	_fn_end
+
+_notify_st?
+	btfsc	STAT_ST
+	goto	_st_is_off	
+	goto	_st_is_on
+_st_end	nop
+	return
+	
+_st_is_on
+	call	_settle
+	call	_set_msg_snd4
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_st_is_on
+	goto	_st_end
+
+_st_is_off
+	call	_settle	
+	call	_set_msg_snd5
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_st_is_off
+	goto	_st_end
+
+_notify_pc?
+	btfsc	STAT_PC
+	goto	_pc_is_off	
+	goto	_pc_is_on
+_pc_end	nop
+	return
+	
+_pc_is_on
+	call	_settle
+	call	_set_msg_snd4
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_pc_is_on
+	goto	_pc_end
+
+_pc_is_off	
+	call	_settle
+	call	_set_msg_snd5
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_pc_is_off
+	goto	_pc_end
+
+_notify_rf?
+	btfsc	STAT_RF
+	goto	_rf_is_off	
+	goto	_rf_is_on
+_rf_end	nop
+	return
+	
+_rf_is_on
+	call	_settle
+	call	_set_msg_snd4
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_rf_is_on
+	goto	_rf_end
+
+_rf_is_off
+	call	_settle	
+	call	_set_msg_snd5
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_rf_is_off
+	goto	_rf_end
+
+_exec_al1
+	movlw	0x00
+	movwf	PORTB
+_CMSS_n	call	_settle
+	call	_set_msg_snd10
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_CMSS_n	
+	return
+
+_exec_al0
+	movlw	0xFF
+	movwf	PORTB
+_CMSS_o	call	_settle
+	call	_set_msg_snd11
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_CMSS_o
+	return
+
+_INVALID
+	call	_settle
+	call	_set_msg_snd7
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_INVALID
+	goto	_THE_END
+
+_THE_END
+
+_exit	call	_settle
+	call	_set_msg_del12
+	call	_settle
+	call	_OK
+	call	_chk_ERROR
+	btfsc	STATUS,	Z
+	goto	_exit
+	goto	_jmp_Accept_Cmds
+
+;-------------------------------------------------------------------
+;   DISPLAY USER DATA STRING TO ENSURE CORRECT TRUNCATION OF DATA
+;-------------------------------------------------------------------
+_disp	movf	chr1,	w
+	call	_tx
+	movf	chr2,	w
+	call	_tx
+	movf	chr3,	w
+	call	_tx
+	movf	chr4,	w
+	call	_tx
+	movf	chr5,	w
+	call	_tx
+	movf	chr6,	w
+	call	_tx
+	movf	chr7,	w
+	call	_tx
+	movf	chr8,	w
+	call	_tx
+	movf	chr9,	w
+	call	_tx
+	movf	chr10,	w
+	call	_tx
+	call	_CR_LF
+	return	
+
+_CR_LF	movlw	0x0A
+	call	_tx
+	movlw	0x0D
+	call 	_tx
+	return
+
+;-------------------------------------------------------------------
+;		RX FUNCTION 1
+;-------------------------------------------------------------------
+
+_rx1	btfss	PIR1,	RCIF
+	goto	_rx1
+	movf	RCREG,	w
+	return
+
+;-------------------------------------------------------------------
+;		NEW MESSAGE AT MEMORY INDEX 12
+;-------------------------------------------------------------------
+_index_12?
+_chk1_	call	_rx1
+	movwf	buffr
+	movlw	0x31 		
+	subwf	buffr,	w
+	btfss	STATUS,	Z
+	goto	_chk1_
+	goto	_chk_2	
+	
+_chk_2	call	_rx1
+	movwf	buffr
+	movlw	0x32
+	subwf	buffr,	w
+	btfss	STATUS,	Z
+	goto	_chk_2
+	return
+
+;-------------------------------------------------------------------
+;		AT+COMMAND TABLE INITIALIZATION
+;-------------------------------------------------------------------
+_set_msg_store
+	call	_set_str_var_cpms
+_shift1	movf	ch_cnt,	w
+	call	_snd_cmd_cpms_me
+	movwf	ch_buff
+	call	_tx
+	incf	ch_cnt,	f
+	decfsz	countr,	f
+	goto	_shift1
+	return
+	
+_set_msg_indicatr
+	call	_set_str_var_cnmi
+_shift2	movf	ch_cnt,	w
+	call	_snd_cmd_cnmi
+	movwf	ch_buff
+	call	_tx
+	incf	ch_cnt,	f
+	decfsz	countr,	f
+	goto	_shift2
+	return
+	
+_set_msg_snd1
+	call	_set_str_var_cmss
+_shift3	movf	ch_cnt,	w
+	call	_snd_cmss_1
+	movwf	ch_buff
+	call	_tx
+	incf	ch_cnt,	f
+	decfsz	countr,	f
+	goto	_shift3
+	return
+
+_set_msg_snd2
+	call	_set_str_var_cmss
+_shift4	movf	ch_cnt,	w
+	call	_snd_cmss_2
+	movwf	ch_buff
+	call	_tx
+	incf	ch_cnt,	f
+	decfsz	countr,	f
+	goto	_shift4
+	return
+
+_set_msg_snd3
+	call	_set_str_var_cmss
+_shift5	movf	ch_cnt,	w
+	call	_snd_cmss_3
+	movwf	ch_buff
+	call	_tx
+	incf	ch_cnt,	f
+	decfsz	countr,	f
+	goto	_shift5
+	return
+
+_set_msg_snd4
+	call	_set_str_var_cmss
+_shiftA	movf	ch_cnt,	w
+	call	_snd_cmss_4
+	movwf	ch_buff
+	call	_tx
+	incf	ch_cnt,	f
+	decfsz	countr,	f
+	goto	_shiftA
+	return
+
+_set_msg_snd5
+	call	_set_str_var_cmss
+_shiftB	movf	ch_cnt,	w
+	call	_snd_cmss_5
+	movwf	ch_buff
+	call	_tx
+	incf	ch_cnt,	f
+	decfsz	countr,	f
+	goto	_shiftB
+	return
+
+_set_msg_snd6
+	call	_set_str_var_cmss
+_shiftC	movf	ch_cnt,	w
+	call	_snd_cmss_6
+	movwf	ch_buff
+	call	_tx
+	incf	ch_cnt,	f
+	decfsz	countr,	f
+	goto	_shiftC
+	return
+
+_set_msg_snd7
+	call	_set_str_var_cmss
+_shiftD	movf	ch_cnt,	w
+	call	_snd_cmss_7
+	movwf	ch_buff
+	call	_tx
+	incf	ch_cnt,	f
+	decfsz	countr,	f
+	goto	_shiftD
+	return
+
+_set_msg_snd8
+	call	_set_str_var_cmss
+_shiftE	movf	ch_cnt,	w
+	call	_snd_cmss_8
+	movwf	ch_buff
+	call	_tx
+	incf	ch_cnt,	f
+	decfsz	countr,	f
+	goto	_shiftE
+	return
+
+_set_msg_snd9
+	call	_set_str_var_cmss
+_shiftF	movf	ch_cnt,	w
+	call	_snd_cmss_9
+	movwf	ch_buff
+	call	_tx
+	incf	ch_cnt,	f
+	decfsz	countr,	f
+	goto	_shiftF
+	return
+
+_set_msg_snd10
+	call	_set_str_var_cmgd
+_shiftG	movf	ch_cnt,	w
+	call	_snd_cmss_10
+	movwf	ch_buff
+	call	_tx
+	incf	ch_cnt,	f
+	decfsz	countr,	f
+	goto	_shiftG
+	return
+
+_set_msg_snd11
+	call	_set_str_var_cmgd
+_shiftH	movf	ch_cnt,	w
+	call	_snd_cmss_11
+	movwf	ch_buff
+	call	_tx
+	incf	ch_cnt,	f
+	decfsz	countr,	f
+	goto	_shiftH
+	return
+
+_set_msg_del12
+	call	_set_str_var_cmgd
+_shift8	movf	ch_cnt,	w
+	call	_snd_cmd_cmgd_12
+	movwf	ch_buff
+	call	_tx
+	incf	ch_cnt,	f
+	decfsz	countr,	f
+	goto	_shift8
+	return
+
+_set_msg_cmgl_0
+	call	_set_str_var_cmss
+_shift6	movf	ch_cnt,	w
+	call	_snd_cmgl_0
+	movwf	ch_buff
+	call	_tx
+	incf	ch_cnt,	f
+	decfsz	countr,	f
+	goto	_shift6
+	return
+
+_set_msg_AT
+	call	_set_str_var_at
+_shift7	movf	ch_cnt,	w
+	call	_snd_cmd_AT
+	movwf	ch_buff
+	call	_tx
+	incf	ch_cnt,	f
+	decfsz	countr,	f
+	goto	_shift7
+	return
+
+_set_CALL_USER
+	call	_set_str_var_atd
+_shiftI	movf	ch_cnt,	w
+	call	_snd_cmd_ATD
+	movwf	ch_buff
+	call	_tx
+	incf	ch_cnt,	f
+	decfsz	countr,	f
+	goto	_shiftI
+	return
+
+_set_END_CALL
+	call	_set_str_var_ath
+_shiftJ	movf	ch_cnt,	w
+	call	_snd_cmd_ATH
+	movwf	ch_buff
+	call	_tx
+	incf	ch_cnt,	f
+	decfsz	countr,	f
+	goto	_shiftJ
+	return
+
+;-------------------------------------------------------------------
+;	AT+COMMAND DEFINE TABLE SETUP / VARIABLE INITIALIZATION
+;-------------------------------------------------------------------
+_set_str_var_cpms
+	movlw	0x00
+	movwf	ch_cnt
+	movlw	d'23'
+	movwf	countr
+	return
+
+_set_str_var_cnmi
+	movlw	0x00
+	movwf	ch_cnt
+	movlw	d'16'
+	movwf	countr
+	return
+
+_set_str_var_cmss
+	movlw	0x00
+	movwf	ch_cnt
+	movlw	d'10'	
+	movwf	countr
+	return
+
+_set_str_var_cmgd
+	movlw	0x00
+	movwf	ch_cnt
+	movlw	d'11'	
+	movwf	countr
+	return
+
+_set_str_var_at
+	movlw	0x00
+	movwf	ch_cnt
+	movlw	d'3'
+	movwf	countr
+	return
+
+_set_str_var_atd
+	movlw	0x00
+	movwf	ch_cnt
+	movlw	d'16'
+	movwf	countr
+	return
+
+_set_str_var_ath
+	movlw	0x00
+	movwf	ch_cnt
+	movlw	d'4'
+	movwf	countr
+	return
+
+;-------------------------------------------------------------------
+;		RESET BYTES OF DATA STORAGE
+;-------------------------------------------------------------------
+_reset_char
+	clrf	chr1
+	clrf	chr2
+	clrf	chr3
+	clrf	chr4
+	clrf	chr5
+	clrf	chr6
+	clrf	chr7
+	clrf	chr8
+	clrf	chr9
+	clrf	chr10
+	return
+
+;-------------------------------------------------------------------
+;		TX FUNCTION
+;-------------------------------------------------------------------
+_tx 	movwf	TXREG
+_wait	BANK1
+	btfss	TXSTA,	TRMT
+	goto	_wait
+	BANK0
+	return	
+
+;-------------------------------------------------------------------
+;    	CHECK FRAMING BIT ERROR AND OVERRUN ERROR  
+;	* RESET CREN WHEN IT ENCOUNTERS AN OVERRUN ERROR
+;	* SAVE BYTE WHEN IT ENCOUNTERS A FRAMING ERROR
+;-------------------------------------------------------------------
+_rx_ERROR
+	btfss	RCSTA,	OERR
+	goto	_chk_FERR
+	bcf	RCSTA,	CREN
+	bsf	RCSTA,	CREN	
+_chk_FERR
+	btfss	RCSTA,	FERR
+	goto	_out_rx
+	movf	RCREG,	w
+	movwf	temp
+
+_out_rx goto	_rx
+
+;-------------------------------------------------------------------
+;    	MAIN RX FUNCTION 
+;	* WILL NOT OVERWRITE REGISTER IF IT HAS A VALUE
+;	* IF REGISTER'S VALUE = NULL, COPY SIGNIFICANT BYTE
+;-------------------------------------------------------------------
+
+_rx	btfss	PIR1,	RCIF
+	goto	_rx_ERROR
+		
+_copy	movf	RCREG,	w
+	movwf	chr_tmp
+	movlw	0x00
+	subwf	chr1,	w
+	btfss	STATUS,	Z
+	goto	_chk_chr_2	
+	goto	_chr_1
+
+_chk_chr_2	
+	movlw	0x00
+	subwf	chr2,	w
+	btfss	STATUS,	Z
+	goto	_chk_chr_3	
+	goto	_chr_2
+
+_chk_chr_3	
+	movlw	0x00
+	subwf	chr3,	w
+	btfss	STATUS,	Z
+	goto	_chk_chr_4	
+	goto	_chr_3
+
+_chk_chr_4	
+	movlw	0x00
+	subwf	chr4,	w
+	btfss	STATUS,	Z
+	goto	_chk_chr_5	
+	goto	_chr_4
+
+_chk_chr_5	
+	movlw	0x00
+	subwf	chr5,	w
+	btfss	STATUS,	Z
+	goto	_chk_chr_6	
+	goto	_chr_5
+
+_chk_chr_6	
+	movlw	0x00
+	subwf	chr6,	w
+	btfss	STATUS,	Z
+	goto	_chk_chr_7	
+	goto	_chr_6
+
+_chk_chr_7	
+	movlw	0x00
+	subwf	chr7,	w
+	btfss	STATUS,	Z
+	goto	_chk_chr_8	
+	goto	_chr_7
+
+_chk_chr_8	
+	movlw	0x00
+	subwf	chr8,	w
+	btfss	STATUS,	Z
+	goto	_chk_chr_9	
+	goto	_chr_8
+
+_chk_chr_9	
+	movlw	0x00
+	subwf	chr9,	w
+	btfss	STATUS,	Z
+	goto	_chk_chr_10	
+	goto	_chr_9
+
+_chk_chr_10	
+	movlw	0x00
+	subwf	chr10,	w
+	btfss	STATUS,	Z
+	goto	_bck	
+	goto	_chr_10
+
+_bck	return
+
+;-------------------------------------------------------------------
+;	SAVE SIGNIFICANT BYTES - USER DATA (TEXT MESSAGE)
+;-------------------------------------------------------------------
+_chr_1
+	movf	chr_tmp,w
+	movwf	chr1
+	goto	_bck
+
+_chr_2
+	movf	chr_tmp,w
+	movwf	chr2
+	goto	_bck
+
+_chr_3	
+	movf	chr_tmp,w
+	movwf	chr3
+	goto	_bck
+
+_chr_4
+	movf	chr_tmp,w
+	movwf	chr4
+	goto	_bck
+
+_chr_5
+	movf	chr_tmp,w
+	movwf	chr5
+	goto	_bck
+
+_chr_6
+	movf	chr_tmp,w
+	movwf	chr6
+	goto	_bck
+
+_chr_7
+	movf	chr_tmp,w
+	movwf	chr7
+	goto	_bck
+
+_chr_8
+	movf	chr_tmp,w
+	movwf	chr8
+	goto	_bck
+
+_chr_9
+	movf	chr_tmp,w
+	movwf	chr9
+	goto	_bck
+
+_chr_10
+	movf	chr_tmp,w
+	movwf	chr10
+	goto	_bck
+
+;-------------------------------------------------------------------
+;	DELAY ROUTINE TO SETTLE THINGS UP
+;-------------------------------------------------------------------
+_settle	movlw 	0xFF
+	movwf	buffr
+_loop	decfsz	buffr,	f
+	goto	_loop
+	return
+
+;-------------------------------------------------------------------
+;	MAIN DELAY FUNCTION
+;-------------------------------------------------------------------
+_delay	movlw	0xff		
+	movwf	num1
+dlay1	movlw	0xff
+	movwf	num
+dlay0	decfsz	num, 	f
+	goto	dlay0		
+	decfsz	num1, 	f
+	goto	dlay0		
+	return
+
+;-------------------------------------------------------------------
+;	I/O PORTS, USART AND INTERRUPT INITIALIZATION
+;	TRANSMIT & RECEIVE Status and Control Register Configuration
+;
+;	* Asynchronous Mode
+;	* 8-bit Transmission
+;	* 8-bit Reception
+;	* High Speed Baud Rate
+;	* Set Baud Rate Generator to 9600
+;	* Enable Serial Port
+;	* Enable Continuous Reception
+;
+;	* Disable Transmit & Receive Interrupt
+;	* Enable RB0 External Interrupt (for the ALARM SYSTEM)
+;-------------------------------------------------------------------
+_init 	clrf	PORTA
+	clrf	PORTB
+	BANK0
+	CMP_OFF
+
+	BANK1
+	movlw 	b'00000011'
+	movwf	TRISB
+
+	movlw	b'00011111'
+	movwf	TRISA
+
+	movlw 	d'25'
+	movwf 	SPBRG
+
+	movlw 	b'00100100'
+	movwf	TXSTA
+
+	BANK0
+	movlw	b'10010000'
+	movwf	RCSTA
+
+	bcf	PIE1,	RCIE
+	bcf	PIE1,	TXIE
+
+	bsf	INTCON,	GIE
+	bsf	INTCON,	INTE
+
+	return
+;-------------------------------------------------------------------
+	END	
